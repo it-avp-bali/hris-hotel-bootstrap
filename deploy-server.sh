@@ -22,7 +22,7 @@ fi
 
 REPO_DIR="$DEFAULT_REPO_DIR"
 REPO_URL="git@github-hris:it-avp-bali/hris-hotel.git"
-BRANCH="uiux/phase-1.1"
+BRANCH="feat/mobile-attendance"
 SSH_ALIAS="github-hris"
 KEY_PATH="${HOME}/.ssh/hris_deploy"
 SSH_CONFIG="${HOME}/.ssh/config"
@@ -46,7 +46,7 @@ Opsi:
   --repo-dir=DIR        Direktori aplikasi (default: /opt/hris-hotel untuk root,
                         ~/hris-hotel untuk pengguna biasa)
   --repo-url=URL        Remote git (default: git@github-hris:it-avp-bali/hris-hotel.git)
-  --branch=NAME         Branch yang dipasang (default: uiux/phase-1.1)
+  --branch=NAME         Branch yang dipasang (default: feat/mobile-attendance)
   --key=PATH            Lokasi deploy key (default: ~/.ssh/hris_deploy)
   --ssh-alias=NAME      Alias SSH (default: github-hris)
   --update              Wajib sudah ada clone; tarik update lalu jalankan install.sh

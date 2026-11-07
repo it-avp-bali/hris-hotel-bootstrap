@@ -26,7 +26,7 @@ install.sh  (Nginx, MariaDB, PHP, .env, build aset, wizard web)
 3. Menampilkan public key dan menunggu sampai Anda menambahkannya di GitHub.
 4. Menyimpan host key `github.com` dan menambahkan alias SSH `github-hris`.
 5. Menguji kunci dengan `ssh -T git@github-hris`.
-6. Meng-clone branch `uiux/phase-1.1` ke `/opt/hris-hotel` (root) atau
+6. Meng-clone branch `feat/mobile-attendance` ke `/opt/hris-hotel` (root) atau
    `~/hris-hotel` (pengguna biasa).
 7. Menjalankan `install.sh` dari repositori aplikasi, kecuali `--clone-only`.
 
@@ -122,6 +122,10 @@ Anda akan diarahkan ke wizard setup sekali pakai:
 2. isi nama, email, dan kata sandi Super Admin;
 3. klik **Buat Super Admin & Selesai**.
 
+Super Admin langsung diminta menyiapkan **autentikasi dua faktor (TOTP)**
+karena `ADMIN_MFA_REQUIRED=true` di produksi. Pindai QR dengan Google
+Authenticator/Authy dan simpan kode pemulihan di tempat aman.
+
 Wizard langsung terkunci dan tidak dapat diputar ulang. Setelah aplikasi
 berjalan, pasang HTTPS:
 
@@ -132,6 +136,17 @@ sudo sed -i 's#^APP_URL=.*#APP_URL=https://hris.example.com#' .env
 sudo sed -i 's#^SESSION_SECURE_COOKIE=.*#SESSION_SECURE_COOKIE=true#' .env
 sudo php artisan config:cache
 ```
+
+Verifikasi cepat setelah HTTPS aktif:
+
+```bash
+curl -fsS https://hris.example.com/health
+sudo supervisorctl status 'hotel-hris-worker:*'
+sudo systemctl status nginx php8.3-fpm mariadb
+```
+
+Panduan lengkap operasi produksi ada di `docs/OPERASI_PRODUKSI.md` dan
+`docs/DEPLOY_VPS.md` pada repositori aplikasi.
 
 ## Update berikutnya
 
@@ -160,7 +175,7 @@ Gunakan `--skip-backup` hanya bila backup terbaru sudah dipastikan ada.
 | --- | --- |
 | `--repo-dir=DIR` | Direktori clone/instalasi |
 | `--repo-url=URL` | Ganti remote repositori privat |
-| `--branch=NAME` | Branch yang dipasang (default `uiux/phase-1.1`) |
+| `--branch=NAME` | Branch yang dipasang (default `feat/mobile-attendance`) |
 | `--key=PATH` | Lokasi deploy key (default `~/.ssh/hris_deploy`) |
 | `--ssh-alias=NAME` | Alias SSH (default `github-hris`) |
 | `--update` | Wajib sudah ada clone; backup, tarik update, jalankan `install.sh` |
